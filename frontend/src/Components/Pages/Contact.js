@@ -1,16 +1,8 @@
-import {
-  Container,
-  Card,
-  Row,
-  Col,
-  // Form,
-  // Button,
-} from "react-bootstrap";
+import { Container, Card, Row, Col } from "react-bootstrap";
 import { MdLocationPin, MdEmail } from "react-icons/md";
 import { FaPhoneAlt, FaClock } from "react-icons/fa";
 import { Navigation } from "../Resuable/Navigation";
 import Footer from "../Resuable/Footer";
-// import { useState } from "react";
 
 export default function Contact() {
   const cardStyle = {
@@ -20,66 +12,6 @@ export default function Contact() {
     marginTop: "2rem",
     boxShadow: "0px 1px 6px grey",
   };
-
-  // const [name, setName] = useState("");
-  // const [nameError, setNameError] = useState("");
-
-  // const [email, setEmail] = useState("");
-  // const [emailError, setEmailError] = useState("");
-
-  // const [subject, setSubject] = useState("");
-  // const [subjectError, setSubjectError] = useState("");
-
-  // const [message, setMessage] = useState("");
-  // const [messageError, setMessageError] = useState("");
-
-  // function handleName(e) {
-  //   const value = e.target.value;
-  //   setName(value);
-  //   if (value.length === 0) {
-  //     setNameError("Name is required");
-  //   } else if (value.length < 3) {
-  //     setNameError("Name should be at least 3 characters long");
-  //   } else {
-  //     setNameError("");
-  //   }
-  // }
-
-  // function handleEmail(e) {
-  //   const value = e.target.value;
-  //   setEmail(value);
-  //   if (value.length === 0) {
-  //     setEmailError("Email is required");
-  //   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-  //     setEmailError("Please enter a valid email address");
-  //   } else {
-  //     setEmailError("");
-  //   }
-  // }
-
-  // function handleSubject(e) {
-  //   const value = e.target.value;
-  //   setSubject(value);
-  //   if (value.length === 0) {
-  //     setSubjectError("Subject is required");
-  //   } else if (value.length < 3) {
-  //     setSubjectError("Subject should be at least 3 characters long");
-  //   } else {
-  //     setSubjectError("");
-  //   }
-  // }
-
-  // function handleMessage(e) {
-  //   const value = e.target.value;
-  //   setMessage(value);
-  //   if (value.length === 0) {
-  //     setMessageError("Message is required");
-  //   } else if (value.length < 20) {
-  //     setMessageError("Message should be at least 20 characters");
-  //   } else {
-  //     setMessageError("");
-  //   }
-  // }
 
   return (
     <>
@@ -193,67 +125,6 @@ export default function Contact() {
           </Col>
         </Row>
       </Container>
-
-      {/* <Container>
-        <Row>
-          <Form>
-            <Row>
-              <Col>
-                <FormGroup className="m-2">
-                  <Form.Control
-                    className="form my-form"
-                    type="text"
-                    placeholder="Your Name"
-                    onChange={handleName}
-                    value={name}
-                  />
-                </FormGroup>
-                <span className="text-danger">{nameError}</span>
-              </Col>
-              <Col>
-                <FormGroup className="m-2">
-                  <Form.Control
-                    className="form"
-                    type="email"
-                    placeholder="Your Email"
-                    onChange={handleEmail}
-                    value={email}
-                  />
-                </FormGroup>
-                <span className="text-danger">{emailError}</span>
-              </Col>
-            </Row>
-
-            <FormGroup className="m-2">
-              <Form.Control
-                className="form"
-                type="text"
-                placeholder="Your Subject"
-                onChange={handleSubject}
-                value={subject}
-              />
-            </FormGroup>
-            <span className="text-danger">{subjectError}</span>
-
-            <FormGroup className="m-2">
-              <Form.Control
-                className="form"
-                as="textarea"
-                placeholder="Message"
-                rows={3}
-                onChange={handleMessage}
-                value={message}
-              />
-            </FormGroup>
-            <span className="text-danger">{messageError}</span>
-            <FormGroup className="text-center">
-              <Button variant="danger" className="b1 my-2" active>
-                Send Message
-              </Button>
-            </FormGroup>
-          </Form>
-        </Row>
-      </Container> */}
       <Footer />
     </>
   );

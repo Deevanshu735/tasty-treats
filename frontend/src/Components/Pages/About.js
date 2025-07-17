@@ -19,7 +19,7 @@ export default function About() {
             <Image
               style={{
                 width: "100%",
-                height: "350px",
+                height: "360px",
                 boxShadow: " 0 8px 8px #D3D3D3",
               }}
               src={rest}
@@ -37,61 +37,69 @@ export default function About() {
               <h3 className="text-center text-danger"> +155895548833</h3>
             </Row>
           </Col>
-          <Col lg={1}></Col>
-          <Col lg={5}>
+          <Col lg={6}>
             <Container fluid>
-              <h5>
-                Lorem ipsum dolor sit amet, consectetur elit. Sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                minim veniam, quis nostrud exercitation
+              <h5
+                style={{
+                  textAlign: "justify",
+                }}
+              >
+                Tasty Treat is a brand known for offering a variety of delicious
+                and high-quality ready-to-eat treats. They cater to different
+                tastes with products ranging from biscuits and namkeens to
+                beverages and frozen snacks. Tasty Treats Restaurant, located in
+                Ramnagar, is known for its focus on quality ingredients,
+                delightful flavors, and exceptional service. It offers a cozy
+                and refined ambiance, making it suitable for both quick bites
+                and leisurely gatherings
               </h5>
               <h5>
                 <Row className="my-4">
-                  <Col lg={1}>
+                  <Col lg={1} md={1} xs={1}>
                     {" "}
                     <FaCheckCircle className="fs-5 text-danger" />
                   </Col>
                   <Col
                     style={{
-                      textAlign: "start",
+                      textAlign: "justify",
                       fontSize: "1rem",
                     }}
                   >
-                    Lorem ipsum dolor sit amet, consect adipiscing elit. Integer
-                    nec odio. Praesent libero.
+                    Tasty Treat offers a wide variety of snacks, including
+                    biscuits, namkeens, chips, candies.
                   </Col>
                 </Row>
               </h5>
               <h5>
                 <Row>
-                  <Col lg={1}>
+                  <Col lg={1} md={1} xs={1}>
                     {" "}
                     <FaCheckCircle className="fs-5 text-danger" />
                   </Col>
-                  <Col style={{ textAlign: "start", fontSize: "1rem" }}>
-                    Lorem ipsum dolor sit amet, consect adipiscing elit. Integer
-                    nec odio. Praesent libero.
+                  <Col style={{ textAlign: "justify", fontSize: "1rem" }}>
+                    With the motto of “Food You'll Love To Share”, Tasty Treat
+                    not only hopes to bring amazing food at an affordable price
                   </Col>
                 </Row>
               </h5>
               <h5>
                 <Row>
-                  <Col lg={1}>
+                  <Col lg={1} md={1} xs={1}>
                     {" "}
                     <FaCheckCircle className="fs-5 text-danger" />
                   </Col>
-                  <Col style={{ textAlign: "start", fontSize: "1rem" }}>
+                  <Col style={{ textAlign: "justify", fontSize: "1rem" }}>
                     Aenean vel gravida elit, non vestibulum sem. Vivamus
                     malesuada erat nec libero faucibus varius.
                   </Col>
                 </Row>
               </h5>
             </Container>
-            <h5 className="mt-5 ms-2" style={{ textAlign: "start" }}>
-              Ullamco laboris nisi ut aliquip ex eacomm odo consequat. Duis aute
-              irure dolor in reprehenderit in voluptate velit esse cillum dolore
-              eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident
+            <h5 className="mt-4 ms-2" style={{ textAlign: "justify" }}>
+              The restaurant provides a wide variety of dishes, including
+              options for dine-in, online ordering, and takeaway. Tasty Treats
+              aims to provide a satisfying experience with a menu that offers
+              value and variety.
             </h5>
           </Col>
         </Row>
