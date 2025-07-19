@@ -211,7 +211,7 @@ export default function Reservation() {
       <Container className="my-2 shadow-lg p-0">
         <Row lg={12} className="h-50">
           <Col lg={4} className="p-0">
-            <Image style={{ width: "100%" }} src={restt} />
+            <Image style={{ width: "100%", height: "100vh" }} src={restt} />
           </Col>
           <Col lg={8} className="my-5 pt-3 px-4">
             <Form className="px-1">

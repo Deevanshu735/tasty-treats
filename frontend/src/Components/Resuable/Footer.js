@@ -19,39 +19,43 @@ export default function Footer() {
   return (
     <Container fluid className="bg-dark text-light">
       <Container>
-        <Row className="p-3">
-          <Col xs={12} md={6} lg={3} className="mb-3 mb-md-0">
+        <Row className="pt-3 pb-0 ">
+          <Col xs={12} md={6} lg={3} className="mb-1 mb-md-0">
             <Row>
               <Col xs={2} style={iconStyle}>
                 <IoLocationOutline />
               </Col>
               <Col xs={10}>
                 <h6>Address</h6>
-                <p>A108 Adam Street New York, NY 535022</p>
+                <p>Buria Chowk , Yamunanagar 133103</p>
               </Col>
             </Row>
           </Col>
 
-          <Col xs={12} md={6} lg={3} className="mb-3 mb-md-0">
+          <Col xs={12} md={6} lg={3} className="mb-1 mb-md-0">
             <Row>
               <Col xs={2} style={iconStyle}>
                 <FiPhoneCall />
               </Col>
               <Col xs={10}>
                 <h6>Contact</h6>
-                <p>Phone: +1 5589 55488 55 Email: in@example.com</p>
+                <p>Phone: +1 5589 55488 55 Email: Tastytreats@gmail.com</p>
               </Col>
             </Row>
           </Col>
 
-          <Col xs={12} md={6} lg={3} className="mb-3 mb-md-0">
+          <Col xs={12} md={6} lg={3} className="mb-1 mb-md-0">
             <Row>
               <Col xs={2} style={iconStyle}>
                 <FaRegClock />
               </Col>
               <Col xs={10}>
                 <h6>Opening Hours</h6>
-                <p>Mon-Sat: 11AM - 11PM Sunday: Closed</p>
+                <p>
+                  Mon-Sat: 11AM - 11PM
+                  <br />
+                  Sunday: Closed
+                </p>
               </Col>
             </Row>
           </Col>
@@ -60,7 +64,7 @@ export default function Footer() {
             <Row xs={12}>
               <Col xs={2}></Col>
               <Col xs={8}>
-                <h6 style={{}}>Follow Us</h6>
+                <h6 style={{ paddingLeft: "6px" }}> Follow Us</h6>
               </Col>
               <Col xs={2}></Col>
             </Row>
@@ -105,11 +109,11 @@ export default function Footer() {
             </Row>
           </Col>
         </Row>
-        <hr />
+        <hr className="m-0 p-0" />
       </Container>
       <Row className="bg-dark py-2">
         <Col className="text-center">
-          <p className="mb-0">© Copyright Tasty Treats All Rights Reserved</p>
+          <p className="mb-2">© Copyright Tasty Treats All Rights Reserved</p>
         </Col>
       </Row>
     </Container>

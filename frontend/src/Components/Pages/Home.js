@@ -12,7 +12,7 @@ export default function Home() {
       <Navigation />
       <Container style={{ backgroundColor: "#f2f2f2" }} fluid>
         <Row lg={12}>
-          <Col lg={6}>
+          <Col lg={6} md={6}>
             <p className="mt-5 ms-5 pt-5 text-secondary cursive-font homep speedy ">
               <i style={{ fontSize: "10vh" }}>
                 “Speedy Flavor"{" "}
@@ -25,22 +25,25 @@ export default function Home() {
                 to={"/reservation"}
                 className="btn-hvr2"
                 style={{
-                  alignItems: "center",
-                  border: "1px solid #DC3545",
+                  // border: "1px solid #DC3545",
+                  border: "none",
                   height: "7vh",
-                  width: "9rem",
-                  marginLeft: "5vh",
+                  width: "10rem",
+                  marginLeft: "2vh",
                   marginBottom: "3vh",
                   color: "#DC3545",
                   backgroundColor: "white",
-                  boxShadow: "0px 2px 2px grey",
+                  boxShadow: "0px 1px 10px #DC3545",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 Book a Table
               </Button>
             </Row>
           </Col>
-          <Col lg={5} className="d-none d-lg-block">
+          <Col lg={5} md={5} className="d-none d-lg-block d-md-block">
             {" "}
             {/* Image hidden on mobile */}
             <Image
