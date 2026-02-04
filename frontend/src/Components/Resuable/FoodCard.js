@@ -5,17 +5,16 @@ import { Star, ShoppingCart } from "lucide-react";
 import { useDispatch } from "react-redux";
 // import cart actions here when we find them, for now just a placeholder function or props
 // assuming cartSlice exists based on Navigation.js
-// import { addToCart } from "../../slices/cartSlice"; 
+import { addToCart } from "../../slices/cartSlice";
 
 import "../../Styles/FoodCard.css";
 
 const FoodCard = ({ item }) => {
-    const { Image, Name, Reg, Med, desc, rating } = item;
+    const { Image, Name, Reg, Med, desc, rating, foodId, foodPrice } = item; // Added foodId and foodPrice destructuring
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {
-        // dispatch(addToCart({ ...item, price: Reg })); // Example dispatch
-        console.log("Added to cart:", Name);
+        dispatch(addToCart(item));
     };
 
     return (
@@ -33,7 +32,7 @@ const FoodCard = ({ item }) => {
                 </div>
                 <Card.Body className="d-flex flex-column">
                     <Card.Title className="food-title">{Name}</Card.Title>
-                    <Card.Text className="text-muted small flex-grow-1">
+                    <Card.Text className="food-desc small flex-grow-1">
                         {desc || "Delicious cheesy goodness with fresh toppings."}
                     </Card.Text>
                     <div className="d-flex justify-content-between align-items-center mt-3">

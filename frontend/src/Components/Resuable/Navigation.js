@@ -5,11 +5,12 @@ import { ShoppingCart, User, Menu as MenuIcon, X } from "lucide-react"; // Moder
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../slices/authSlice";
 import { motion, AnimatePresence } from "framer-motion";
-import "../../Styles/Navigation.css"; // We will create this next
+import "../../Styles/Navigation.css";
 
 export function Navigation() {
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,10 +60,10 @@ export function Navigation() {
           </button>
 
           {/* Cart Icon */}
-          <div className="icon-wrapper">
+          <Link to="/cart" className="icon-wrapper text-decoration-none">
             <ShoppingCart size={24} className="nav-icon" />
-            <Badge bg="danger" pill className="cart-badge">0</Badge>
-          </div>
+            <Badge bg="danger" pill className="cart-badge">{cartTotalQuantity}</Badge>
+          </Link>
 
           {/* User Profile (Desktop) */}
           <div className="d-none d-lg-block">

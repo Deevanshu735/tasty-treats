@@ -10,6 +10,8 @@ import Menu from "./Components/Pages/Menu.js";
 import Contact from "./Components/Pages/Contact.js";
 import Login from "./Components/Login/Login.js";
 import Reservation from "./Components/Pages/Reservation.js";
+import Cart from "./Components/Pages/Cart.js";
+import Checkout from "./Components/Pages/Checkout.js";
 import PaymentSuccess from "./Components/Pages/PaymentSuccess.js";
 import NotFound from "./Components/Resuable/NotFound.js";
 import Admin from "./Components/Admin/Admin.js";
@@ -27,6 +29,8 @@ function App() {
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/admin" element={<Admin />} />
           {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/paymentsuccess" element={<PaymentSuccess />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

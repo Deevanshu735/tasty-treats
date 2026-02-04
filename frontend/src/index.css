@@ -57,6 +57,10 @@ h6 {
   background-color: var(--primary-color) !important;
 }
 
+.text-secondary-custom {
+  color: var(--text-secondary) !important;
+}
+
 .cursive-font {
   font-family: var(--font-heading) !important;
 }
