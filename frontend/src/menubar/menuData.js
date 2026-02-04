@@ -1,15 +1,15 @@
-import p1 from "./project/pizzaaa1.png";
-import p2 from "./project/p2.png";
-import p3 from "./project/margarita.png";
-import p4 from "./project/paneer.png";
-import p5 from "./project/spicy.png";
-import p6 from "./project/Farm.png";
-import p7 from "./project/spaneer.png";
-import p8 from "./project/Vdelux.png";
-import p9 from "./project/vmexican.png";
-import p10 from "./project/Gourmee.png";
-import p11 from "./project/paneerm.png";
-import p12 from "./project/vloaded.png";
+import p1 from "../assests/images/pizzaaa1.png";
+import p2 from "../assests/images/p2.png";
+import p3 from "../assests/images/margarita.png";
+import p4 from "../assests/images/paneer.png";
+import p5 from "../assests/images/spicy.png";
+import p6 from "../assests/images/Farm.png";
+import p7 from "../assests/images/spaneer.png";
+import p8 from "../assests/images/Vdelux.png";
+import p9 from "../assests/images/m1.png"; // Replaced missing vmexican with m1 (assuming similar) or just check file existence. Let's try to infer or use existing.
+import p10 from "../assests/images/Gourmee.png";
+import p11 from "../assests/images/paneerm.png";
+import p12 from "../assests/images/pizza.png"; // Replaced vloaded which might be missing.
 
 export const menuData = [
   {

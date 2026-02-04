@@ -5,7 +5,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Home from "./Components/Pages/Home.js";
-import About from "./Components/Pages/About.js";
+// import About from "./Components/Pages/About.js";
 import Menu from "./Components/Pages/Menu.js";
 import Contact from "./Components/Pages/Contact.js";
 import Login from "./Components/Login/Login.js";
@@ -21,7 +21,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />

@@ -13,26 +13,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { BACKEND_BASE_URL } from "../../constant";
-
-const cardStyle = {
-  margin: "20px 0px",
-  width: "100%",
-  maxWidth: "22rem",
-  border: "1px solid white",
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-};
-
-const imageContainerStyle = {
-  width: "100%",
-  height: "200px",
-  overflow: "hidden",
-};
-
-const imageStyle = {
-  objectFit: "contain",
-  width: "100%",
-  height: "100%",
-};
+import "../../Styles/Menu.css"; // Use the new common CSS
 
 const MenuItems = ({ selectedMenu }) => {
   const [show, setShow] = useState(false);
@@ -64,11 +45,11 @@ const MenuItems = ({ selectedMenu }) => {
   };
 
   const handleAddWithSpinner = (item, index) => {
-    setLoadingItem(index); // Set the loading state for this specific item
+    setLoadingItem(index);
 
     setTimeout(() => {
       handleAddItem(item);
-      setLoadingItem(null); // Reset loading state after 1 second
+      setLoadingItem(null);
     }, 500);
   };
 
@@ -92,6 +73,7 @@ const MenuItems = ({ selectedMenu }) => {
     (total, item) => total + item.foodPrice * item.quantity,
     0
   );
+
   const handlePayment = async () => {
     try {
       const {
@@ -124,141 +106,128 @@ const MenuItems = ({ selectedMenu }) => {
       };
 
       const razor = new window.Razorpay(options);
-      // console.log(razor);
       razor.open();
     } catch (err) {
       console.error(err);
     }
   };
+
   return (
-    <Container>
-      <Row xs={1} sm={2} md={3} className="d-flex justify-content-around">
+    <Container className="pb-5">
+      <Row className="g-4 justify-content-center">
         {selectedMenu.map((item, index) => (
-          <Card key={index} style={cardStyle}>
-            <Card.Body className="position-relative pt-1 w-100 h-100">
-              <Row xs={12} className="h-60">
-                <Col>
-                  <div style={imageContainerStyle}>
-                    <img
-                      src={item.foodImage}
-                      alt={item.foodName}
-                      style={imageStyle}
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row xs={12}>
-                <Col>
-                  <h5 className="text-center">{item.foodName}</h5>
-                </Col>
-              </Row>
-              <Row xs={12}>
-                <Col>
-                  <h5 className="text-center text-danger">
-                    <span className="text-black">Price: &#8377;</span>
-                    {item.foodPrice}
+          <Col lg={4} md={6} sm={12} key={index}>
+            <Card className="menu-item-card h-100">
+              <div className="text-center p-3 bg-light">
+                <Card.Img
+                  variant="top"
+                  src={item.foodImage}
+                  className="menu-item-img"
+                  alt={item.foodName}
+                />
+              </div>
+              <Card.Body className="d-flex flex-column">
+                <Card.Title className="fw-bold mb-2">{item.foodName}</Card.Title>
+                <div className="d-flex justify-content-between align-items-center mt-auto pt-3">
+                  <h5 className="text-primary-custom fw-bold mb-0">
+                    &#8377;{item.foodPrice}
                   </h5>
-                </Col>
-              </Row>
-              <Row xs={12} className="d-flex justify-content-center">
-                <Col className="d-flex justify-content-center">
-                  <Button
-                    className="btn-hvr me-2"
-                    style={{
-                      width: "30%",
-                      color: "black",
-                      textAlign: "center",
-                    }}
-                    variant="outline-danger"
-                    onClick={() => handleShow(item)}
-                  >
-                    Order
-                  </Button>
-                  <Button
-                    className="btn-hvr"
-                    style={{
-                      width: "30%",
-                      color: "black",
-                      textAlign: "center",
-                    }}
-                    variant="outline-danger"
-                    onClick={() => handleAddWithSpinner(item, index)}
-                    disabled={loadingItem === index}
-                  >
-                    {loadingItem === index ? (
-                      <Spinner
-                        variant="danger"
-                        animation="border"
-                        size="sm"
-                        style={{ marginLeft: "10px" }}
-                      />
-                    ) : (
-                      "Add"
-                    )}
-                  </Button>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+                  <div className="d-flex gap-2">
+                    <Button
+                      variant="outline-danger"
+                      className="btn-outline-custom rounded-circle p-2"
+                      onClick={() => handleShow(item)}
+                      title="Order Now"
+                    >
+                      <i className="fas fa-shopping-bag"></i>
+                    </Button>
+                    <Button
+                      variant="danger"
+                      className="btn-primary-custom rounded-circle p-2"
+                      onClick={() => handleAddWithSpinner(item, index)}
+                      disabled={loadingItem === index}
+                      title="Add to Cart"
+                    >
+                      {loadingItem === index ? (
+                        <Spinner size="sm" animation="border" />
+                      ) : (
+                        <i className="fas fa-cart-plus text-white"></i>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
       </Row>
 
-      {/* Modal for showing order details */}
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Order Summary</Modal.Title>
+      {/* Modal for Order Summary */}
+      <Modal show={show} onHide={handleClose} centered size="lg">
+        <Modal.Header closeButton className="border-0">
+          <Modal.Title className="fw-bold">Order Summary</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {cartItems.length > 0 ? (
-            <div>
-              <h6>Added Items:</h6>
+            <div className="p-3">
+              <h6 className="item-header mb-3">Your Items</h6>
               <ListGroup variant="flush">
                 {cartItems.map((item, index) => (
                   <ListGroup.Item
                     key={index}
-                    className="d-flex justify-content-between align-items-center"
+                    className="d-flex justify-content-between align-items-center border-bottom py-3"
                   >
-                    <span>
-                      {item.foodName} - &#8377; {item.foodPrice * item.quantity}
-                    </span>
-                    <InputGroup style={{ width: "30%" }}>
+                    <div className="d-flex align-items-center gap-3">
+                      <img src={item.foodImage} alt={item.foodName} style={{ width: '60px', height: '60px', objectFit: 'contain' }} className="rounded" />
+                      <div>
+                        <h6 className="mb-0 fw-bold">{item.foodName}</h6>
+                        <small className="text-muted">&#8377;{item.foodPrice} x {item.quantity}</small>
+                      </div>
+                    </div>
+
+                    <div className="d-flex align-items-center gap-2">
                       <Button
-                        variant="outline-secondary"
+                        variant="light"
                         size="sm"
+                        className="rounded-circle"
                         onClick={() => decreaseQuantity(index)}
                       >
                         -
                       </Button>
-                      <FormControl
-                        readOnly
-                        value={item.quantity}
-                        className="text-center"
-                      />
+                      <span className="fw-bold mx-2">{item.quantity}</span>
                       <Button
-                        variant="outline-secondary"
+                        variant="light"
                         size="sm"
+                        className="rounded-circle"
                         onClick={() => increaseQuantity(index)}
                       >
                         +
                       </Button>
-                    </InputGroup>
+                      <div className="fw-bold ms-3" style={{ minWidth: '80px', textAlign: 'right' }}>
+                        &#8377; {item.foodPrice * item.quantity}
+                      </div>
+                    </div>
                   </ListGroup.Item>
                 ))}
               </ListGroup>
-              <hr />
-              <h5>Total Price: &#8377; {totalPrice}</h5>
+              <div className="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                <h5 className="mb-0">Total</h5>
+                <h4 className="fw-bold text-primary-custom">&#8377; {totalPrice}</h4>
+              </div>
             </div>
           ) : (
-            <p>No items added to the cart yet.</p>
+            <div className="text-center py-5">
+              <p className="text-muted">Your cart is empty.</p>
+            </div>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+        <Modal.Footer className="border-0 justify-content-between">
+          <Button variant="light" onClick={handleClose}>
+            Continue Shopping
           </Button>
           {cartItems.length > 0 && (
-            <Button variant="danger" onClick={handlePayment}>
-              Confirm Order
+            <Button className="btn-primary-custom px-5" onClick={handlePayment}>
+              Checkout
             </Button>
           )}
         </Modal.Footer>

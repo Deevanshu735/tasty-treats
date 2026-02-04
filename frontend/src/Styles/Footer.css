@@ -1,0 +1,88 @@
+/* Footer.css */
+.footer {
+    background: #212529;
+    /* Darker than previous for more contrast */
+    color: #F1F2F6;
+    font-family: var(--font-body);
+}
+
+.footer-logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.footer-title {
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.text-muted {
+    color: #ced4da !important;
+    opacity: 0.8;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Softer transparent bg */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-icon:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+}
+
+.footer-links .list-group-item {
+    transition: all 0.2s ease;
+    padding-left: 0;
+}
+
+.footer-links .list-group-item:hover {
+    color: var(--primary-color) !important;
+    padding-left: 5px;
+    /* Subtle movement */
+    background: transparent;
+}
+
+.newsletter-box input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.8rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.newsletter-box input:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(255, 71, 87, 0.1);
+}
+
+.newsletter-box input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-newsletter {
+    transition: all 0.3s ease;
+}
+
+.btn-newsletter:hover {
+    background-color: var(--secondary-color);
+    /* Darker red or black on hover */
+    transform: translateX(-2px);
+}

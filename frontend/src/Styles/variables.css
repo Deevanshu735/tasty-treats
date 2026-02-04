@@ -1,0 +1,27 @@
+/* Modern Vivid Theme */
+:root {
+    /* Colors */
+    --primary-color: #FF4757;
+    --primary-hover: #FF6B81;
+    --secondary-color: #2F3542;
+    --accent-color: #7BED9F;
+    --background-color: #F8F9FA;
+    --surface-color: #FFFFFF;
+    --text-primary: #2F3542;
+    --text-secondary: #57606F;
+    --text-light: #F1F2F6;
+
+    /* Typography */
+    --font-heading: 'Dancing Script', cursive;
+    --font-body: 'Poppins', sans-serif;
+
+    /* Spacing & Layout */
+    --container-padding: 2rem;
+    --header-height: 80px;
+    --border-radius: 12px;
+
+    /* Effects */
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 15px 35px rgba(255, 71, 87, 0.2);
+    --transition: all 0.3s ease;
+}

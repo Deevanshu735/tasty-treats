@@ -1,121 +1,84 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { IoLocationOutline } from "react-icons/io5";
-import {
-  FaRegClock,
-  FaTwitter,
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa";
-import { FiPhoneCall } from "react-icons/fi";
+import { Container, Row, Col, ListGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { MapPin, Phone, Mail, Clock, Facebook, Twitter, Instagram, Linkedin, Send } from "lucide-react";
+import "../../Styles/Footer.css"; // We will create this
 
 export default function Footer() {
-  const iconStyle = {
-    color: "red",
-    fontSize: "30px",
-  };
-
   return (
-    <Container fluid className="bg-dark text-light">
+    <footer className="footer pt-5">
       <Container>
-        <Row className="pt-3 pb-0 ">
-          <Col xs={12} md={6} lg={3} className="mb-1 mb-md-0">
-            <Row>
-              <Col xs={2} style={iconStyle}>
-                <IoLocationOutline />
-              </Col>
-              <Col xs={10}>
-                <h6>Address</h6>
-                <p>Buria Chowk , Yamunanagar 133103</p>
-              </Col>
-            </Row>
+        <Row className="pb-5 justify-content-between">
+          <Col lg={4} md={6} sm={12} className="mb-4 pe-lg-5">
+            <h2 className="footer-logo mb-4 d-flex align-items-center gap-2">
+              <span className="text-primary-custom">Tasty</span>Treats
+            </h2>
+            <p className="text-muted small lh-lg">
+              Tasty Treats is your go-to destination for delicious meals delivered fast. We promise quality, taste, and speed right to your doorstep.
+            </p>
+            <div className="d-flex gap-3 mt-4">
+              {/* Social Icons with individual hover colors could be nice, but consistent brand color is better for premium feel */}
+              <div className="social-icon"><Facebook size={20} /></div>
+              <div className="social-icon"><Twitter size={20} /></div>
+              <div className="social-icon"><Instagram size={20} /></div>
+              <div className="social-icon"><Linkedin size={20} /></div>
+            </div>
           </Col>
 
-          <Col xs={12} md={6} lg={3} className="mb-1 mb-md-0">
-            <Row>
-              <Col xs={2} style={iconStyle}>
-                <FiPhoneCall />
-              </Col>
-              <Col xs={10}>
-                <h6>Contact</h6>
-                <p>Phone: +1 5589 55488 55 Email: Tastytreats@gmail.com</p>
-              </Col>
-            </Row>
+          <Col lg={2} md={6} sm={6} className="mb-4">
+            <h5 className="footer-title mb-4">Quick Links</h5>
+            <ListGroup variant="flush" className="bg-transparent footer-links">
+              <ListGroup.Item action href="#" className="bg-transparent border-0 ps-0 text-muted small">Home</ListGroup.Item>
+              <ListGroup.Item action href="#menu" className="bg-transparent border-0 ps-0 text-muted small">Menu</ListGroup.Item>
+              <ListGroup.Item action href="#about" className="bg-transparent border-0 ps-0 text-muted small">About Us</ListGroup.Item>
+              <ListGroup.Item action href="#contact" className="bg-transparent border-0 ps-0 text-muted small">Contact</ListGroup.Item>
+            </ListGroup>
           </Col>
 
-          <Col xs={12} md={6} lg={3} className="mb-1 mb-md-0">
-            <Row>
-              <Col xs={2} style={iconStyle}>
-                <FaRegClock />
-              </Col>
-              <Col xs={10}>
-                <h6>Opening Hours</h6>
-                <p>
-                  Mon-Sat: 11AM - 11PM
-                  <br />
-                  Sunday: Closed
-                </p>
-              </Col>
-            </Row>
+          <Col lg={3} md={6} sm={6} className="mb-4">
+            <h5 className="footer-title mb-4">Contact Info</h5>
+            <ListGroup variant="flush" className="bg-transparent">
+              <ListGroup.Item className="bg-transparent border-0 ps-0 text-muted small mb-3 d-flex gap-3">
+                <MapPin size={20} className="text-primary-custom flex-shrink-0" />
+                <span>Buria Chowk, Yamunanagar 133103</span>
+              </ListGroup.Item>
+              <ListGroup.Item className="bg-transparent border-0 ps-0 text-muted small mb-3 d-flex gap-3">
+                <Phone size={20} className="text-primary-custom flex-shrink-0" />
+                <span>+1 5589 55488 55</span>
+              </ListGroup.Item>
+              <ListGroup.Item className="bg-transparent border-0 ps-0 text-muted small d-flex gap-3">
+                <Mail size={20} className="text-primary-custom flex-shrink-0" />
+                <span>example@gmail.com</span>
+              </ListGroup.Item>
+            </ListGroup>
           </Col>
 
-          <Col xs={12} md={6} lg={3}>
-            <Row xs={12}>
-              <Col xs={2}></Col>
-              <Col xs={8}>
-                <h6 style={{ paddingLeft: "6px" }}> Follow Us</h6>
-              </Col>
-              <Col xs={2}></Col>
-            </Row>
-
-            <Row className="justify-content-center">
-              <Col xs="auto" className="d-flex justify-content-center mb-2">
-                <a
-                  href="https://twitter.com"
-                  className="text-danger"
-                  aria-label="Twitter"
-                >
-                  <FaTwitter className="fs-4" />
-                </a>
-              </Col>
-              <Col xs="auto" className="d-flex justify-content-center mb-2">
-                <a
-                  href="https://facebook.com"
-                  className="text-danger"
-                  aria-label="Facebook"
-                >
-                  <FaFacebookF className="fs-4" />
-                </a>
-              </Col>
-              <Col xs="auto" className="d-flex justify-content-center mb-2">
-                <a
-                  href="https://instagram.com"
-                  className="text-danger"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram className="fs-4" />
-                </a>
-              </Col>
-              <Col xs="auto" className="d-flex justify-content-center mb-2">
-                <a
-                  href="https://linkedin.com"
-                  className="text-danger"
-                  aria-label="LinkedIn"
-                >
-                  <FaLinkedinIn className="fs-4" />
-                </a>
-              </Col>
-            </Row>
+          <Col lg={3} md={6} sm={12} className="mb-4">
+            <h5 className="footer-title mb-4">Newsletter</h5>
+            <p className="text-muted small mb-3">Subscribe for latest updates & offers.</p>
+            <div className="newsletter-box position-relative mt-3">
+              <input type="email" placeholder="Email Address" className="form-control rounded-2 py-2 fs-6" />
+              <button className="btn-newsletter position-absolute top-0 end-0 h-100 rounded-2 bg-primary-custom text-white border-0 px-3">
+                <Send size={18} />
+              </button>
+            </div>
           </Col>
         </Row>
-        <hr className="m-0 p-0" />
+
+        <Row className="border-top border-secondary border-opacity-25 py-4 mt-2">
+          <Col md={6} className="text-center text-md-start">
+            <p className="mb-0 text-muted small">
+              &copy; 2024 <span className="text-primary-custom fw-bold">Tasty Treats</span>. All rights reserved.
+            </p>
+          </Col>
+          <Col md={6} className="text-center text-md-end mt-2 mt-md-0">
+            <div className="d-flex gap-4 justify-content-center justify-content-lg-end text-muted small">
+              <span>Privacy Policy</span>
+              <span>Terms of Use</span>
+            </div>
+          </Col>
+        </Row>
       </Container>
-      <Row className="bg-dark py-2">
-        <Col className="text-center">
-          <p className="mb-2">© Copyright Tasty Treats All Rights Reserved</p>
-        </Col>
-      </Row>
-    </Container>
+    </footer>
   );
 }
