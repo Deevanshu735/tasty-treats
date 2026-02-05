@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button, Card, ListGroup } from "react-bootst
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
+import toast, { Toaster } from "react-hot-toast";
 import { BACKEND_BASE_URL } from "../../constant";
 import { Navigation } from "../Resuable/Navigation";
 import Footer from "../Resuable/Footer";
@@ -26,8 +27,12 @@ const Checkout = () => {
     };
 
     const handlePayment = async () => {
+        const toastId = toast.loading('Initiating secure payment...');
         try {
+            console.log("Fetching payment key...");
             const { data: { key } } = await axios.get(`${BACKEND_BASE_URL}/api/payments/getkey`);
+
+            console.log("Creating order...");
             const { data: { order } } = await axios.post(`${BACKEND_BASE_URL}/api/payments/checkout`, {
                 totalPrice: cart.cartTotalAmount,
             });
@@ -49,12 +54,15 @@ const Checkout = () => {
                 theme: {
                     color: "#e23744",
                 },
+                modal: {
+                    ondismiss: function () {
+                        toast.dismiss(toastId);
+                        toast.error("Payment cancelled");
+                    }
+                },
                 handler: function (response) {
-                    // This handler is for client-side success handling if not using callback_url redirect
-                    // But since we use callback_url, backend handles redirection.
-                    // On success redirection, we should clear cart?
-                    // Usually clearing cart happens on the success page or after successful webhook.
-                    // For simplicity, we can let the success page handle it or clear it here if using handler.
+                    toast.dismiss(toastId);
+                    toast.success("Payment Successful!");
                     dispatch(clearCart());
                     // window.location.href = ... (backend redirects)
                 }
@@ -64,13 +72,15 @@ const Checkout = () => {
             razor.open();
         } catch (err) {
             console.error("Payment Error: ", err);
-            alert("Payment failed. Please try again.");
+            toast.dismiss(toastId);
+            toast.error("Payment failed. Please try again.");
         }
     };
 
     return (
         <>
             <Navigation />
+            <Toaster position="top-center" reverseOrder={false} />
             <div className="checkout-page min-vh-100 py-5" style={{ paddingTop: "100px" }}>
                 <Container>
                     <h2 className="fw-bold mb-5 text-center">Checkout</h2>

@@ -2,54 +2,22 @@ import React, { useEffect } from "react";
 import { Container, Nav } from "react-bootstrap";
 import { Navigation } from "../Resuable/Navigation";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Footer from "../Resuable/Footer";
 import MenuItems from "./MenuItems";
-import { BACKEND_BASE_URL } from "../../constant";
-import "../../Styles/Menu.css"; // We will create this
+import "../../Styles/Menu.css";
+import { categories, foodItems } from "../../menubar/menuData";
 
 export default function Menu() {
-  const [menu, setMenu] = React.useState();
-  const [menuError, setMenuError] = React.useState({});
-  const [menuData, setMenuData] = React.useState([]);
-  const [menuDataError, setMenuDataError] = React.useState({});
-
-  const [selectedMenu, setSelectedMenu] = React.useState(1);
+  const [selectedMenu, setSelectedMenu] = React.useState(categories[0].foodId);
   const [selectedMenuItem, setSelectedMenuItem] = React.useState([]);
 
   useEffect(() => {
-    const getFoodCategory = async () => {
-      try {
-        const response = await axios.get(`${BACKEND_BASE_URL}/api/foods/getfoodcategory`);
-        setMenu(response.data.categories);
-        if (response.data.data.length > 0) {
-          setSelectedMenu(1);
-        }
-      } catch (error) {
-        setMenuError(error);
-      }
-    };
-    getFoodCategory();
-  }, []);
-
-  useEffect(() => {
-    const getFoodItems = async function () {
-      try {
-        const response = await axios.get(`${BACKEND_BASE_URL}/api/foods/menu`);
-        setMenuData(response.data);
-      } catch (error) {
-        setMenuDataError(error);
-      }
-    };
-    getFoodItems();
-  }, []);
-
-  useEffect(() => {
-    const data = menuData.filter((item, i) => {
+    // Filter mock data directly
+    const data = foodItems.filter((item) => {
       return item.foodCategory === selectedMenu;
     });
     setSelectedMenuItem(data);
-  }, [menuData, selectedMenu]);
+  }, [selectedMenu]);
 
   return (
     <>
@@ -62,21 +30,17 @@ export default function Menu() {
           </div>
 
           <Nav className="justify-content-center mb-5 category-nav">
-            {menu ? (
-              <ul className="d-flex flex-wrap justify-content-center list-unstyled gap-3">
-                {menu.map((item, index) => (
-                  <li
-                    key={index}
-                    className={`category-item ${selectedMenu === item.foodId ? "active" : ""}`}
-                    onClick={() => setSelectedMenu(item.foodId)}
-                  >
-                    {item.foodCategory}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-danger">{menuError.message}</p>
-            )}
+            <ul className="d-flex flex-wrap justify-content-center list-unstyled gap-3">
+              {categories.map((item) => (
+                <li
+                  key={item.foodId}
+                  className={`category-item ${selectedMenu === item.foodId ? "active" : ""}`}
+                  onClick={() => setSelectedMenu(item.foodId)}
+                >
+                  {item.foodCategory}
+                </li>
+              ))}
+            </ul>
           </Nav>
 
           {selectedMenuItem && <MenuItems selectedMenu={selectedMenuItem} />}
