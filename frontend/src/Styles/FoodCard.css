@@ -1,0 +1,110 @@
+/* FoodCard.css */
+.food-card {
+    border: none;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.food-card:hover {
+    box-shadow: 0 15px 30px rgba(226, 55, 68, 0.15);
+}
+
+.card-img-container {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+}
+
+.food-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.food-card:hover .food-img {
+    transform: scale(1.1);
+}
+
+/* Overlay effect */
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.food-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.btn-quick-view {
+    font-weight: 600;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.food-card:hover .btn-quick-view {
+    transform: translateY(0);
+}
+
+.food-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: #2d3436;
+    font-size: 1.15rem;
+}
+
+.food-desc {
+    color: #4b5563;
+    /* Darker gray for better contrast */
+    line-height: 1.5;
+    display: block;
+    /* Fallback for older browsers */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.food-price-badge {
+    background-color: #fff0f1;
+    color: #e23744;
+    font-weight: 800;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.95rem;
+}
+
+.btn-add-cart {
+    background-color: #e23744;
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(226, 55, 68, 0.2);
+}
+
+.btn-add-cart:hover {
+    background-color: #d22b39;
+    box-shadow: 0 6px 12px rgba(226, 55, 68, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-add-cart:active {
+    transform: translateY(0);
+}

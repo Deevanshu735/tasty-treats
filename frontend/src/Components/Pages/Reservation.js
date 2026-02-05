@@ -1,323 +1,139 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { Image } from "react-bootstrap";
-import { Form, FormGroup, Button } from "react-bootstrap";
-import restt from "../../assests/images/rest.webp";
+import React, { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Calendar, Clock, Users, MessageSquare, CheckCircle } from "lucide-react"; // Icons
+import { motion } from "framer-motion";
+import { Navigation } from "../Resuable/Navigation";
 import Footer from "../Resuable/Footer";
 import axios from "axios";
-import { Navigation } from "../Resuable/Navigation";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../../constant";
+import "../../Styles/Contact.css"; // Reusing contact styles for consistency, or create new Reservation.css if needed
 
 export default function Reservation() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    date: "",
+    time: "",
+    people: "",
+    message: ""
+  });
+  const [loading, setLoading] = useState(false);
 
-  const [name, setName] = React.useState("");
-  const [nameError, setNameError] = React.useState("");
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const [email, setEmail] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
-
-  const [phone, setPhone] = React.useState();
-  const [phoneError, setPhoneError] = React.useState("");
-
-  const [date, setDate] = React.useState("");
-  const [dateError, setDateError] = React.useState("");
-
-  const [time, setTime] = React.useState("");
-  const [timeError, setTimeError] = React.useState("");
-
-  const [people, setPeople] = React.useState("");
-  const [peopleError, setPeopleError] = React.useState("");
-
-  const [message, setMessage] = React.useState("");
-  const [messageError, setMessageError] = React.useState("");
-
-  function handleName(e) {
-    const value = e.target.value;
-    setName(value);
-    const trimmedValue = value.trim();
-    if (trimmedValue.length === 0) {
-      setNameError("Name is required");
-    } else if (trimmedValue.length < 3) {
-      setNameError("Name should have at least 3 characters");
-    } else if (!/^[a-zA-Z]+(\s[a-zA-Z]+)*$/.test(trimmedValue)) {
-      setNameError("Please enter a valid name");
-    } else {
-      setNameError("");
-    }
-  }
-
-  function handleEmail(e) {
-    const value = e.target.value.trim();
-    setEmail(value);
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      setEmailError("Please enter a valid email ");
-    } else if (value.length === "") {
-      setEmailError("Please enter Email");
-    } else {
-      setEmailError("");
-    }
-  }
-  function handlePhone(e) {
-    const value = e.target.value;
-    setPhone(value);
-
-    // Check if the field is empty
-    if (value === "") {
-      setPhoneError("Phone number is required");
-    }
-    // Check if the phone number is a valid 10-digit number
-    else if (!/^\d{10}$/.test(value)) {
-      setPhoneError("Please enter a valid 10-digit number");
-    }
-    // If valid, clear the error
-    else {
-      setPhoneError("");
-    }
-  }
-
-  function handleDate(e) {
-    const value = e.target.value;
-    setDate(value);
-
-    const today = new Date();
-    const selectedDate = new Date(value);
-
-    today.setHours(0, 0, 0, 0);
-    selectedDate.setHours(0, 0, 0, 0);
-
-    if (value.length === 0) {
-      setDateError("Date is required");
-    } else if (selectedDate < today) {
-      setDateError("You cannot select a past date");
-      setDate("");
-    } else {
-      setDateError("");
-    }
-  }
-
-  function handleTime(e) {
-    const value = e.target.value;
-    setTime(value);
-
-    const today = new Date();
-    const selectedDate = new Date(date);
-    const currentTime = today.toTimeString().slice(0, 5);
-    if (
-      selectedDate.toDateString() === today.toDateString() &&
-      value < currentTime
-    ) {
-      setTimeError("You cannot select a past time today");
-      setTime("");
-    } else if (value.length === 0) {
-      setTimeError("Time is required");
-    } else {
-      setTimeError("");
-    }
-  }
-
-  function handlePeople(e) {
-    const value = e.target.value;
-    setPeople(value);
-    if (value.length === 0) {
-      setPeopleError("Number of Guests is required");
-    } else if (Number(value) < 1) {
-      setPeopleError("Number of Guests should be a positive integer");
-    } else if (Number(value) > 20) {
-      setPeopleError("Number of Guests should not exceed 20");
-    } else {
-      setPeopleError("");
-    }
-  }
-
-  function handleMessage(e) {
-    const value = e.target.value;
-    setMessage(value);
-    if (value.length === 0) {
-      setMessageError("Message is required");
-    } else {
-      setMessageError("");
-    }
-  }
-
-  const handleSendMessage = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (name === "") {
-      setNameError("Name is required");
-    }
-    if (email === "") {
-      setEmailError("Email is required");
-    }
-    if (phone === "") {
-      setPhoneError("Phone is required");
-    }
-    if (date === "") {
-      setDateError("Date is required");
-    }
-    if (time === "") {
-      setTimeError("Time is required");
-    }
-    if (people === "") {
-      setPeopleError("Please enter number of people");
-    }
-    if (message === "") {
-      setMessageError("Message is required");
-    }
-
-    if (
-      nameError ||
-      emailError ||
-      phoneError ||
-      dateError ||
-      timeError ||
-      peopleError ||
-      messageError
-    ) {
-      console.error("Please fix validation errors before submitting");
-      return;
-    }
-
+    setLoading(true);
     try {
-      const reservationData = {
-        name,
-        email,
-        phone,
-        date,
-        time,
-        people,
-        message,
-      };
-
-      const res = await axios.post(
-        `${BACKEND_BASE_URL}/api/reservations/reserve`,
-        reservationData
-      );
-      console.log(res.data);
+      await axios.post(`${BACKEND_BASE_URL}/api/reservations/reserve`, formData);
       alert("Reservation Successful! We'll contact you soon.");
       navigate("/");
     } catch (error) {
       console.error("Error:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
       <Navigation />
-      <h2 className="text-center my-3 cursive-font">
-        <span className="text-danger fs-1"> A TABLE</span>
-      </h2>
-      <Container className="my-2 shadow-lg p-0">
-        <Row lg={12} className="h-50">
-          <Col lg={4} className="p-0">
-            <Image style={{ width: "100%", height: "100vh" }} src={restt} />
-          </Col>
-          <Col lg={8} className="my-5 pt-3 px-4">
-            <Form className="px-1">
-              <Row>
-                <Col md={6}>
-                  <FormGroup>
-                    <Form.Control
-                      className="custom-input"
-                      type="text"
-                      placeholder="Your Name"
-                      onChange={handleName}
-                      value={name}
-                    />
-                  </FormGroup>
-                  <span className="text-danger ms-2">{nameError}</span>
-                </Col>
-                <Col md={6}>
-                  <FormGroup>
-                    <Form.Control
-                      className="custom-input"
-                      type="email"
-                      placeholder="Your Email"
-                      onChange={handleEmail}
-                      value={email}
-                    />
-                  </FormGroup>
-                  <span className="text-danger ms-2">{emailError}</span>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  <FormGroup>
-                    <Form.Control
-                      className="custom-input"
-                      type="tel"
-                      placeholder="Your Phone"
-                      onChange={handlePhone}
-                      value={phone}
-                    />
-                  </FormGroup>
-                  <span className="text-danger ms-2">{phoneError}</span>
-                </Col>
-                <Col md={6}>
-                  <FormGroup>
-                    <Form.Control
-                      className="custom-input"
-                      type="date"
-                      placeholder="Enter date"
-                      onChange={handleDate}
-                      value={date}
-                    />
-                  </FormGroup>
-                  <span className="text-danger ms-2">{dateError}</span>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  <FormGroup>
-                    <Form.Control
-                      className="custom-input"
-                      type="time"
-                      placeholder="Time"
-                      onChange={handleTime}
-                      value={time}
-                    />
-                  </FormGroup>
-                  <span className="text-danger ms-2">{timeError}</span>
-                </Col>
-                <Col md={6}>
-                  <FormGroup>
-                    <Form.Control
-                      className="custom-input"
-                      type="number"
-                      placeholder="No of people"
-                      onChange={handlePeople}
-                      value={people}
-                    />
-                  </FormGroup>
-                  <span className="text-danger ms-2">{peopleError}</span>
-                </Col>
-              </Row>
-              <Form.Group controlId="exampleForm.ControlTextarea1">
-                <Form.Control
-                  className="custom-input my-2"
-                  as="textarea"
-                  placeholder="Message"
-                  onChange={handleMessage}
-                  value={message}
-                  rows={4}
-                />
-              </Form.Group>
-              <span className="text-danger ms-2">{messageError}</span>
-              <FormGroup className="text-center">
-                <Button
-                  variant="danger"
-                  className="b1"
-                  active
-                  onClick={handleSendMessage}
-                >
-                  Send Message
-                </Button>
-              </FormGroup>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+      <div className="contact-page-wrapper" style={{ background: 'linear-gradient(to right, #fff5f5, #ffffff)' }}>
+        <Container>
+          <div className="text-center mb-5">
+            <h5 className="text-primary-custom text-uppercase fw-bold letter-spacing-2">Book A Table</h5>
+            <h2 className="display-4 fw-bold">Reservation</h2>
+          </div>
+
+          <Row className="g-0 rounded-4 overflow-hidden shadow-lg bg-white">
+            {/* Left Side: Image/Banner */}
+            <Col lg={5} className="d-none d-lg-block">
+              <div
+                className="h-100 w-100"
+                style={{
+                  backgroundImage: "url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80')",
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  minHeight: '600px'
+                }}
+              >
+                <div className="h-100 w-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center text-white p-5 text-center">
+                  <h3 className="cursive-font mb-3">Delicious Moments</h3>
+                  <p>Reserve your spot for an unforgettable dining experience.</p>
+                </div>
+              </div>
+            </Col>
+
+            {/* Right Side: Form */}
+            <Col lg={7}>
+              <div className="p-5">
+                <h3 className="fw-bold mb-4 text-primary-custom">Book Your Table</h3>
+                <Form onSubmit={handleSubmit}>
+                  <Row>
+                    <Col md={6} className="mb-3">
+                      <Form.Label className="small fw-bold text-muted">Name</Form.Label>
+                      <Form.Control required name="name" onChange={handleChange} type="text" placeholder="John Doe" className="mod-input" />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label className="small fw-bold text-muted">Email</Form.Label>
+                      <Form.Control required name="email" onChange={handleChange} type="email" placeholder="john@example.com" className="mod-input" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={6} className="mb-3">
+                      <Form.Label className="small fw-bold text-muted">Phone</Form.Label>
+                      <Form.Control required name="phone" onChange={handleChange} type="tel" placeholder="+91 98765..." className="mod-input" />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label className="small fw-bold text-muted">Guests</Form.Label>
+                      <div className="input-group">
+                        <span className="input-group-text bg-white border-end-0"><Users size={18} className="text-muted" /></span>
+                        <Form.Control required name="people" onChange={handleChange} type="number" min="1" max="20" className="mod-input border-start-0 ps-0" placeholder="2 People" />
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={6} className="mb-3">
+                      <Form.Label className="small fw-bold text-muted">Date</Form.Label>
+                      <div className="input-group">
+                        <span className="input-group-text bg-white border-end-0"><Calendar size={18} className="text-muted" /></span>
+                        <Form.Control required name="date" onChange={handleChange} type="date" className="mod-input border-start-0 ps-0" />
+                      </div>
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label className="small fw-bold text-muted">Time</Form.Label>
+                      <div className="input-group">
+                        <span className="input-group-text bg-white border-end-0"><Clock size={18} className="text-muted" /></span>
+                        <Form.Control required name="time" onChange={handleChange} type="time" className="mod-input border-start-0 ps-0" />
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <Form.Group className="mb-4">
+                    <Form.Label className="small fw-bold text-muted">Special Request</Form.Label>
+                    <Form.Control name="message" onChange={handleChange} as="textarea" rows={3} placeholder="Birthday, Anniversary, etc." className="mod-input" />
+                  </Form.Group>
+
+                  <Button
+                    variant="danger"
+                    type="submit"
+                    disabled={loading}
+                    className="btn-primary-custom w-100 py-3 fw-bold d-flex align-items-center justify-content-center gap-2"
+                  >
+                    {loading ? 'Booking...' : 'Confirm Reservation'} <CheckCircle size={18} />
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
       <Footer />
     </>
   );

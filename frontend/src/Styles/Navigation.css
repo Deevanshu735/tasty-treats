@@ -1,0 +1,133 @@
+/* Navigation.css */
+.custom-navbar {
+    background-color: transparent;
+    padding: 1.5rem 0;
+    transition: all 0.4s ease;
+}
+
+.custom-navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 1rem 0;
+}
+
+.brand-logo {
+    font-size: 2rem;
+    color: var(--primary-color) !important;
+    font-weight: 700;
+}
+
+.nav-links .nav-link {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+    margin: 0 1rem;
+    position: relative;
+    font-family: var(--font-body);
+    transition: color 0.3s ease;
+}
+
+.nav-links .nav-link:hover,
+.nav-links .nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+.nav-links .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--primary-color);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-links .nav-link:hover::after,
+.nav-links .nav-link.active::after {
+    width: 100%;
+}
+
+.icon-wrapper {
+    position: relative;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.nav-icon {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.nav-icon:hover {
+    color: var(--primary-color);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 0.7rem;
+    padding: 0.3em 0.5em;
+}
+
+.btn-login {
+    background-color: var(--primary-color);
+    color: white !important;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary-color);
+}
+
+.btn-login:hover {
+    background-color: transparent;
+    color: var(--primary-color) !important;
+}
+
+.btn-logout {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--text-secondary);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.mobile-toggle {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* Mobile Menu */
+.mobile-menu-overlay {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    height: 100vh;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.mobile-link {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin: 1rem 0;
+    font-weight: 600;
+    display: block;
+}
+
+.mobile-link:hover {
+    color: var(--primary-color);
+}
