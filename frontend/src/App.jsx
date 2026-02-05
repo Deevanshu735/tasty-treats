@@ -4,18 +4,18 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Home from "./Components/Pages/Home.js";
-// import About from "./Components/Pages/About.js";
-import Menu from "./Components/Pages/Menu.js";
-import Contact from "./Components/Pages/Contact.js";
-import Login from "./Components/Login/Login.js";
-import Reservation from "./Components/Pages/Reservation.js";
-import Cart from "./Components/Pages/Cart.js";
-import Checkout from "./Components/Pages/Checkout.js";
-import PaymentSuccess from "./Components/Pages/PaymentSuccess.js";
-import NotFound from "./Components/Resuable/NotFound.js";
-import Admin from "./Components/Admin/Admin.js";
-// import Profile from "./Components/Pages/Profile.js";
+import Home from "./Components/Pages/Home";
+// import About from "./Components/Pages/About";
+import Menu from "./Components/Pages/Menu";
+import Contact from "./Components/Pages/Contact";
+import Login from "./Components/Login/Login";
+import Reservation from "./Components/Pages/Reservation";
+import Cart from "./Components/Pages/Cart";
+import Checkout from "./Components/Pages/Checkout";
+import PaymentSuccess from "./Components/Pages/PaymentSuccess";
+import NotFound from "./Components/Resuable/NotFound";
+import Admin from "./Components/Admin/Admin";
+// import Profile from "./Components/Pages/Profile";
 
 function App() {
   return (
