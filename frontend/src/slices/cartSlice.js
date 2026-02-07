@@ -71,7 +71,7 @@ const cartSlice = createSlice({
                 }
             );
 
-            state.cartTotalQuantity = quantity;
+            state.cartTotalQuantity = state.cartItems.length;
             state.cartTotalAmount = total;
         },
     },
