@@ -1,20 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Button, Image } from "react-bootstrap";
+import { Container, Row, Col, Button, Image, ProgressBar, Collapse, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { addToCart, removeFromCart, decreaseCart, clearCart, getTotals } from "../../slices/cartSlice";
 import { Navigation } from "../Resuable/Navigation";
 import Footer from "../Resuable/Footer";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag } from "lucide-react";
+import { Trash2, Plus, Minus, ArrowLeft, ShoppingBag, Truck, MessageSquare } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import "../../Styles/Cart.css";
 
 const Cart = () => {
     const cart = useSelector((state) => state.cart);
-    const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [openNote, setOpenNote] = useState(false);
+    const [chefNote, setChefNote] = useState("");
+
+    const FREE_DELIVERY_THRESHOLD = 500;
+    const progress = Math.min((cart.cartTotalAmount / FREE_DELIVERY_THRESHOLD) * 100, 100);
+    const remainingForFreeDelivery = FREE_DELIVERY_THRESHOLD - cart.cartTotalAmount;
 
     useEffect(() => {
         dispatch(getTotals());
@@ -42,6 +47,8 @@ const Cart = () => {
     };
 
     const handleCheckout = () => {
+        // You generally want to pass the chefNote to checkout or store it in redux/context
+        // For now, we'll just navigate
         navigate("/checkout");
     };
 
@@ -85,6 +92,26 @@ const Cart = () => {
                     ) : (
                         <Row className="g-5">
                             <Col lg={8}>
+                                {/* Free Delivery Progress */}
+                                <div className="mb-4 p-3 bg-white rounded-4 shadow-sm">
+                                    <div className="d-flex align-items-center gap-2 mb-2">
+                                        <Truck size={20} className="text-primary-custom" />
+                                        {remainingForFreeDelivery > 0 ? (
+                                            <span className="fw-medium text-secondary">
+                                                Add <span className="text-dark fw-bold">&#8377;{remainingForFreeDelivery}</span> more for <span className="text-success fw-bold">Free Delivery</span>
+                                            </span>
+                                        ) : (
+                                            <span className="fw-bold text-success">You've unlocked Free Delivery!</span>
+                                        )}
+                                    </div>
+                                    <ProgressBar
+                                        now={progress}
+                                        variant={remainingForFreeDelivery <= 0 ? "success" : "danger"}
+                                        className="rounded-pill"
+                                        style={{ height: "8px" }}
+                                    />
+                                </div>
+
                                 <AnimatePresence>
                                     {cart.cartItems.map((cartItem) => (
                                         <motion.div
@@ -147,7 +174,32 @@ const Cart = () => {
                                     ))}
                                 </AnimatePresence>
 
-                                <div className="d-flex justify-content-between mt-4">
+                                {/* Note to Chef */}
+                                <div className="mt-4">
+                                    <Button
+                                        variant="link"
+                                        className="text-decoration-none text-secondary d-flex align-items-center gap-2 p-0 mb-2"
+                                        onClick={() => setOpenNote(!openNote)}
+                                        aria-controls="chef-note-collapse"
+                                        aria-expanded={openNote}
+                                    >
+                                        <MessageSquare size={18} /> Add a note for the chef
+                                    </Button>
+                                    <Collapse in={openNote}>
+                                        <div id="chef-note-collapse">
+                                            <Form.Control
+                                                as="textarea"
+                                                rows={3}
+                                                placeholder="Allergies? Extra spicy? Let us know!"
+                                                value={chefNote}
+                                                onChange={(e) => setChefNote(e.target.value)}
+                                                className="shadow-none border-secondary-subtle"
+                                            />
+                                        </div>
+                                    </Collapse>
+                                </div>
+
+                                <div className="d-flex justify-content-between mt-5">
                                     <Button
                                         variant="link"
                                         as={Link}
@@ -177,13 +229,17 @@ const Cart = () => {
                                     </div>
                                     <div className="d-flex justify-content-between mb-4 text-secondary">
                                         <span>Delivery Fee</span>
-                                        <span className="text-success fw-bold">Free</span>
+                                        {cart.cartTotalAmount >= FREE_DELIVERY_THRESHOLD ? (
+                                            <span className="text-success fw-bold">Free</span>
+                                        ) : (
+                                            <span className="text-dark fw-bold">&#8377;40</span>
+                                        )}
                                     </div>
                                     <hr className="my-4" />
                                     <div className="d-flex justify-content-between mb-4">
                                         <h4 className="fw-bold">Total</h4>
-                                        <h4 className="fw-bold text-primary">
-                                            &#8377;{cart.cartTotalAmount}
+                                        <h4 className="fw-bold text-primary-custom">
+                                            &#8377;{cart.cartTotalAmount + (cart.cartTotalAmount >= FREE_DELIVERY_THRESHOLD ? 0 : 40)}
                                         </h4>
                                     </div>
                                     <Button

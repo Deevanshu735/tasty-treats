@@ -12,12 +12,16 @@ import "../../Styles/Home.css";
 import heroImg from "../../assests/images/pizzas1.png"; // Keeping original image asset for now
 import { Clock, Truck, ShieldCheck, ArrowRight } from "lucide-react";
 
+import SkeletonCard from "../Resuable/SkeletonCard";
+
 export default function Home() {
   // Select top 4 items for popular section
   const [popularItems, setPopularItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPopularItems = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`${BACKEND_BASE_URL}/api/foods/menu`);
         // Assuming response.data is the array of items.
@@ -28,6 +32,8 @@ export default function Home() {
         }
       } catch (error) {
         console.error("Error fetching popular items:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchPopularItems();
@@ -160,13 +166,22 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <Row>
-              {popularItems.map((item, index) => (
-                <Col lg={3} md={6} sm={12} key={index} className="mb-4">
-                  <motion.div variants={itemVariants}>
-                    <FoodCard item={item} />
-                  </motion.div>
-                </Col>
-              ))}
+              {loading ? (
+                // Show 4 skeletons loading
+                Array.from({ length: 4 }).map((_, idx) => (
+                  <Col lg={3} md={6} sm={12} key={idx} className="mb-4">
+                    <SkeletonCard />
+                  </Col>
+                ))
+              ) : (
+                popularItems.map((item, index) => (
+                  <Col lg={3} md={6} sm={12} key={index} className="mb-4">
+                    <motion.div variants={itemVariants}>
+                      <FoodCard item={item} />
+                    </motion.div>
+                  </Col>
+                ))
+              )}
             </Row>
           </motion.div>
         </Container>

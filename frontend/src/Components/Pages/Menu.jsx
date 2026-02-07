@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Container, Nav } from "react-bootstrap";
+import { Container, Nav, Row, Col } from "react-bootstrap";
 import { Navigation } from "../Resuable/Navigation";
 import { Link } from "react-router-dom";
 import Footer from "../Resuable/Footer";
 import MenuItems from "./MenuItems";
+import SkeletonCard from "../Resuable/SkeletonCard";
 import "../../Styles/Menu.css";
 // import { categories, foodItems } from "../../menubar/menuData";
 import axios from "axios";
@@ -13,6 +14,7 @@ export default function Menu() {
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [selectedMenuItem, setSelectedMenuItem] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getFoodCategory = async () => {
@@ -35,29 +37,15 @@ export default function Menu() {
   useEffect(() => {
     const getFoodItems = async () => {
       if (!selectedMenu) return; // Don't fetch if no category is selected
+      setLoading(true);
       try {
-        // Fetch all items and filter (or ideally fetch by category if API supports it)
-        // Based on ManageMenu.jsx, it seems we might need to fetch all and filter client-side
-        // or maybe there is an endpoint. Let's assume we fetch all for now like ManageMenu.jsx did?
-        // ManageMenu.jsx: const response = await axios.get(`${BACKEND_BASE_URL}/api/foods/menu`);
-        // data = menuData.filter((item) => item.foodCategory === selectedMenu);
-
         const response = await axios.get(`${BACKEND_BASE_URL}/api/foods/menu`);
-        const allItems = response.data.data; // API usually returns { data: [...] } or just [...]?
-        // In ManageMenu.jsx line 50: setMenuData(response.data); -> It seems response.data IS the array?
-        // Let's look at ManageMenu.jsx again.
-        // StartLine: 49: const response = await axios.get(`${BACKEND_BASE_URL}/api/foods/menu`);
-        // StartLine: 50: setMenuData(response.data);
-        // StartLine: 59: const data = menuData.filter((item) => item.foodCategory === selectedMenu);
-
-        // Wait, looking at ManageMenu.jsx again.
-        // It uses response.data.
-
         const filtered = response.data.filter((item) => item.foodCategory === selectedMenu);
         setSelectedMenuItem(filtered);
-
       } catch (error) {
         console.error("Error fetching menu items:", error);
+      } finally {
+        setLoading(false);
       }
     };
     getFoodItems();
@@ -87,7 +75,20 @@ export default function Menu() {
             </ul>
           </Nav>
 
-          {selectedMenuItem && <MenuItems selectedMenu={selectedMenuItem} />}
+          <Container className="pb-5">
+            <Row className="g-4 justify-content-center">
+              {loading ? (
+                // Show 8 skeletons while loading
+                Array.from({ length: 8 }).map((_, idx) => (
+                  <Col lg={3} md={4} sm={6} key={idx}>
+                    <SkeletonCard />
+                  </Col>
+                ))
+              ) : (
+                <MenuItems selectedMenu={selectedMenuItem} />
+              )}
+            </Row>
+          </Container>
         </Container>
       </div>
       <Footer />
